@@ -6,7 +6,12 @@ import matplotlib
 
 
 def km_from_tco(tco):
-    return 2.0*pi*6400.0/float(4*(tco+1))
+    # The convention is to refer to TCo1279 as 9 km, but the equation below gives 8 km
+    # For this resolution we manually set it to 9 km
+    if tco == 1279:
+        return 9.0
+    else:
+        return 2.0*pi*6400.0/float(4*(tco+1))
 
 
 sb.set_style("whitegrid")
@@ -40,6 +45,9 @@ axes.text(1279, 385, "Operational\nresolution", horizontalalignment="center")
 
 axes.set_xlim(xlims)
 axes.set_ylim(ylims)
+
+axes.set_xticks(data["Truncation"])
+axes.set_xticklabels([f"TCo{tco}" for tco in data["Truncation"]])
 
 ax2 = axes.twiny()
 ax2.grid(False)
